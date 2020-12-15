@@ -15,7 +15,7 @@ class MyClient(discord.Client):
         if "🌮" in message.content:
             sender = message.author.id
             recipients = message.raw_mentions
-            await sender_given = has_given_today(self.conn, sender)
+            sender_given = has_given_today(self.conn, sender)
             if sender in recipients:
                 await message.channel.send(f"<@{sender}>, You cant give yourself a taco")
             elif sender_given < len(recipients):

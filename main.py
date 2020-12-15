@@ -32,11 +32,11 @@ class MyClient(discord.Client):
             sender_given = has_given_today(self.conn, sender)
             if sender in recipients:
                 await message.channel.send(f"<@{sender}>, You cant give yourself a taco")
-            elif (5 - sender_given) <= len(recipients):
+            elif (5 - sender_given) >= len(recipients):
                 for recipient in recipients:
                     add_transaction(self.conn, sender, recipient)
                 recipients_strs = [f"<@{recipient}>" for recipient in recipients]
-                await message.channel.send(f"{sender} gave tacos to {' '.join(recipients_strs)}")
+                await message.channel.send(f"<@{sender}> gave tacos to {' '.join(recipients_strs)}")
             else:
                 await message.channel.send(f"<@{sender}>, You can only give 5 tacos a day, and you have already given {sender_given}")
 

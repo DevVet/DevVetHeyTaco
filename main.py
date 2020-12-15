@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import os
 import discord
 import datetime
-from db import *
+from pg2db import *
 
 load_dotenv()
 
@@ -15,7 +15,7 @@ class MyClient(discord.Client):
         if "🌮" in message.content:
             sender = message.author.id
             recipients = message.raw_mentions
-            sender_given = has_given_today(self.conn, sender)
+            await sender_given = has_given_today(self.conn, sender)
             if sender in recipients:
                 await message.channel.send(f"<@{sender}>, You cant give yourself a taco")
             elif sender_given < len(recipients):

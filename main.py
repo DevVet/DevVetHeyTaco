@@ -32,6 +32,8 @@ class MyClient(discord.Client):
             sender_given = has_given_today(self.conn, sender)
             if sender in recipients:
                 await message.channel.send(f"<@{sender}>, You cant give yourself a taco")
+            elif '785953175865524244' in recipients:
+                await message.channel.send(f"<@{sender}>, I DONT NEED YO TACOS! I GOT THE TACOS!!!!")
             elif (5 - sender_given) >= len(recipients):
                 for recipient in recipients:
                     add_transaction(self.conn, sender, recipient)
@@ -43,7 +45,7 @@ class MyClient(discord.Client):
         elif "!tacoscores" in message.content:
             data = get_this_months_scores(self.conn)
             data = [f"<@{taco[0]}> - {taco[1]}" for taco in data]
-            now = datetime.datetime.now()
+            now = datetime.now()
             out_message = f'Scores for {MONTH[now.month - 1]} {now.year}\n'+'\n'.join(data)
             await message.channel.send(out_message)
 

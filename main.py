@@ -22,7 +22,7 @@ class MyClient(discord.Client):
                 for recipient in recipients:
                     add_transaction(self.conn, sender, recipient)
                     recipients = [f"<@{recipient}>" for recipient in recipients]
-                await message.channel.send(f"<@{sender}> gave tacos to {' '.join(recipients)}")
+                await message.channel.send(f"{sender} gave tacos to {' '.join(recipients)}")
             else:
                 await message.channel.send(f"<@{sender}>, You can only give 5 tacos a day, and you have already given {sender_given}")
 

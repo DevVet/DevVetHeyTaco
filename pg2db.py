@@ -64,7 +64,6 @@ def get_this_months_scores(conn):
     '''
     c.execute(statement)
     data = [record for record in c.fetchall()]
-    print(data)
     c.close()
     return data
 

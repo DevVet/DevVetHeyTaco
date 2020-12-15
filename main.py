@@ -31,7 +31,7 @@ class MyClient(discord.Client):
             data = [f"<@{taco[0]}> - {taco[1]}" for taco in data]
             out_message = '\n'.join(data)
             print(out_message)
-            message.channel.send(out_message)
+            await message.channel.send(out_message)
 
 client = MyClient()
 client.run(os.getenv("DISCORD_KEY"))

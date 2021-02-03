@@ -50,7 +50,7 @@ class MyClient(discord.Client):
             for taco in data:
                 embed.add_field(name=f"<@{taco[0]}>", value=taco[1], inline=False)
             
-            await message.channel.send(embed)
+            await message.channel.send(embed=embed)
 
 client = MyClient()
 client.run(os.getenv("DISCORD_KEY"))

@@ -44,10 +44,13 @@ class MyClient(discord.Client):
 
         elif "!tacoscores" in message.content:
             data = get_this_months_scores(self.conn)
-            data = [f"<@{taco[0]}> - {taco[1]}" for taco in data]
+            
             now = datetime.now()
-            out_message = f'Scores for {MONTH[now.month - 1]} {now.year}\n'+'\n'.join(data)
-            await message.channel.send(out_message)
+            embed = discord.Embed(title=f"Scores for {MONTH[now.month - 1]} {now.year}", description=f"A total of {sum([taco[1] for taco in data])} have been given this month")
+            for taco in data:
+                embed.add_field(name=f"<@{taco[0]}>", value=taco[1], inline=False)
+            
+            await message.channel.send(embed)
 
 client = MyClient()
 client.run(os.getenv("DISCORD_KEY"))

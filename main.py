@@ -47,7 +47,7 @@ class MyClient(discord.Client):
             now = datetime.now()
             embed = discord.Embed(title=f"Scores for {MONTH[now.month - 1]} {now.year}", description=f"A total of {sum([taco[1] for taco in data])} have been given this month")
             for taco in data:
-                guild_member_name = await msg.channel.guild.fetch_member(taco[0])
+                guild_member_name = await message.channel.guild.fetch_member(taco[0])
                 embed.add_field(name=guild_member_name.nick, value=taco[1], inline=False)
             
             await message.channel.send(embed=embed)

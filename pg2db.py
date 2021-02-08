@@ -60,7 +60,7 @@ def get_this_months_scores(conn):
         SELECT recipient, COUNT(recipient) AS score FROM transactions 
         WHERE extract(month from created) = extract(month from now()) and extract(year from created) = extract(year from now())
         GROUP BY recipient
-        ORDER BY score asc
+        ORDER BY score desc
     '''
     c.execute(statement)
     data = [record for record in c.fetchall()]

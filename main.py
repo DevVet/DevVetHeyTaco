@@ -1,8 +1,10 @@
 from dotenv import load_dotenv
 import os
-import discord
 import datetime
 from pg2db import *
+import discord
+from discord_slash import SlashCommand
+from discord_slash.utils import manage_commands
 
 load_dotenv()
 MONTH= [
@@ -52,6 +54,35 @@ class MyClient(discord.Client):
             
             await message.channel.send(embed=embed)
 
-client = MyClient()
+
+
+client = MyClient(intents=discord.Intents.all())
+slash = SlashCommand(client, auto_register=True)
+
+guild_ids = [765949464443617331]
+
+@slash.slash(
+  name="tacoscores",
+  description="Returns this month's taco scores",
+  guild_ids=guild_ids
+)
+async def _send_tacoscores(ctx):
+    data = get_this_months_scores(init_db_conn())
+    
+    now = datetime.now()
+
+    if len(data) > 0:
+        await ctx.channel.send(f"***Scores for {MONTH[now.month - 1]} {now.year}***.\nA total of {sum([taco[1] for taco in data])} have been given this month")
+        for taco in data:
+            guild_member = await ctx.channel.guild.fetch_member(taco[0])
+            embed = discord.Embed(title=taco[1])
+            embed.set_author(name=guild_member.display_name, icon_url=guild_member.avatar_url)
+            await ctx.channel.send(embed=embed)
+    else:
+        embed = discord.Embed(title="No tacos awarded this month", description="Go get some Tacos!")
+        await ctx.channel.send(embed=embed)
+
+
+
 client.run(os.getenv("DISCORD_KEY"))
 

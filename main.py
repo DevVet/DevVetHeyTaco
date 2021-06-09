@@ -30,7 +30,9 @@ class MyClient(discord.Client):
             sender = message.author.id
             recipients = message.raw_mentions
             sender_given = has_given_today(self.conn, sender)
-            if sender in recipients:
+            if len(recipients) < 1:
+                return
+            elif sender in recipients:
                 await message.channel.send(f"<@{sender}>, You cant give yourself a taco")
             elif '785953175865524244' in recipients:
                 await message.channel.send(f"<@{sender}>, I DONT NEED YO TACOS! I GOT THE TACOS!!!!")

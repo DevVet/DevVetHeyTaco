@@ -35,6 +35,8 @@ class MyClient(discord.Client):
             sender = message.author.id
             recipients = message.raw_mentions
             sender_given = has_given_today(self.conn, sender)
+            if len(recipients) < 1:
+                    return
             if sender in recipients:
                 await message.channel.send(
                     f"<@{sender}>, You cant give yourself a taco"

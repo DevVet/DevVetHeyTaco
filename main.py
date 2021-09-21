@@ -13,10 +13,10 @@ class MyClient(discord.Client):
 
     async def on_message(self, message):
         if "🌮" in message.content:
-           handle_taco(message) 
+           await handle_taco(message) 
 
         elif "!tacoscores" in message.content:
-           handle_taco_scores(message) 
+           await handle_taco_scores(message) 
 
 
 # Setup slash commands
@@ -30,7 +30,7 @@ DEVVET_GUILD_IDS = [765949464443617331]
     guild_ids=DEVVET_GUILD_IDS
 )
 async def _send_taco_scores(ctx):
-    handle_taco_scores(ctx)
+    await handle_taco_scores(ctx)
 
 
 if __name__ == "__main__":
